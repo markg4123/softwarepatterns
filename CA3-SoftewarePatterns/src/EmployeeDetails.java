@@ -297,47 +297,56 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 
 	// display current Employee details
 	public void displayRecords(Employee thisEmployee) {
-		int countGender = 0;
-		int countDep = 0;
-		boolean found = false;
-
 		searchByIdField.setText("");
 		searchBySurnameField.setText("");
-		// if Employee is null or ID is 0 do nothing else display Employee
-		// details
+		
+		// if Employee is null or ID is 0 do nothing else display Employee details
 		if (thisEmployee == null) {
 		} else if (thisEmployee.getEmployeeId() == 0) {
 		} else {
-			// find corresponding gender combo box value to current employee
-			while (!found && countGender < gender.length - 1) {
-				if (Character.toString(thisEmployee.getGender()).equalsIgnoreCase(gender[countGender]))
-					found = true;
-				else
-					countGender++;
-			} // end while
-			found = false;
-			// find corresponding department combo box value to current employee
-			while (!found && countDep < department.length - 1) {
-				if (thisEmployee.getDepartment().trim().equalsIgnoreCase(department[countDep]))
-					found = true;
-				else
-					countDep++;
-			} // end while
-			idField.setText(Integer.toString(thisEmployee.getEmployeeId()));
-			ppsField.setText(thisEmployee.getPps().trim());
-			surnameField.setText(thisEmployee.getSurname().trim());
-			firstNameField.setText(thisEmployee.getFirstName());
-			genderCombo.setSelectedIndex(countGender);
-			departmentCombo.setSelectedIndex(countDep);
-			salaryField.setText(format.format(thisEmployee.getSalary()));
-			// set corresponding full time combo box value to current employee
-			if (thisEmployee.getFullTime() == true)
-				fullTimeCombo.setSelectedIndex(1);
-			else
-				fullTimeCombo.setSelectedIndex(2);
-		}
+			getEmployeeDetails(thisEmployee);		}
 		change = false;
-	}// end display records
+	}
+
+	private void getEmployeeDetails(Employee thisEmploye) {
+		int countGender = 0;
+		int countDep = 0;
+		boolean found = false;
+		// find corresponding gender combo box value to current employee
+		while (!found && countGender < gender.length - 1) {
+			if (Character.toString(thisEmploye.getGender()).equalsIgnoreCase(gender[countGender]))
+				found = true;
+			else
+				countGender++;
+		} 
+		found = false;
+		// find corresponding department combo box value to current employee
+		while (!found && countDep < department.length - 1) {
+			if (thisEmploye.getDepartment().trim().equalsIgnoreCase(department[countDep]))
+				found = true;
+			else
+				countDep++;
+		}
+		
+		displayEmployeeDetails(thisEmploye, countDep, countDep);
+		
+	}
+
+	private void displayEmployeeDetails(Employee thisEmploye, int countGender, int countDep) {
+		idField.setText(Integer.toString(thisEmploye.getEmployeeId()));
+		ppsField.setText(thisEmploye.getPps().trim());
+		surnameField.setText(thisEmploye.getSurname().trim());
+		firstNameField.setText(thisEmploye.getFirstName());
+		genderCombo.setSelectedIndex(countGender);
+		departmentCombo.setSelectedIndex(countDep);
+		salaryField.setText(format.format(thisEmploye.getSalary()));
+		// set corresponding full time combo box value to current employee
+		if (thisEmploye.getFullTime() == true)
+			fullTimeCombo.setSelectedIndex(1);
+		else
+			fullTimeCombo.setSelectedIndex(2);
+		
+	}
 
 	// display Employee summary dialog
 	private void displayEmployeeSummaryDialog() {
