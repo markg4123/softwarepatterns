@@ -297,56 +297,46 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 
 	// display current Employee details
 	public void displayRecords(Employee thisEmployee) {
-		searchByIdField.setText("");
-		searchBySurnameField.setText("");
-		
-		// if Employee is null or ID is 0 do nothing else display Employee details
-		if (thisEmployee == null) {
-		} else if (thisEmployee.getEmployeeId() == 0) {
-		} else {
-			getEmployeeDetails(thisEmployee);		}
-		change = false;
-	}
-
-	private void getEmployeeDetails(Employee thisEmploye) {
 		int countGender = 0;
 		int countDep = 0;
 		boolean found = false;
-		// find corresponding gender combo box value to current employee
-		while (!found && countGender < gender.length - 1) {
-			if (Character.toString(thisEmploye.getGender()).equalsIgnoreCase(gender[countGender]))
-				found = true;
-			else
-				countGender++;
-		} 
-		found = false;
-		// find corresponding department combo box value to current employee
-		while (!found && countDep < department.length - 1) {
-			if (thisEmploye.getDepartment().trim().equalsIgnoreCase(department[countDep]))
-				found = true;
-			else
-				countDep++;
-		}
-		
-		displayEmployeeDetails(thisEmploye, countDep, countDep);
-		
-	}
 
-	private void displayEmployeeDetails(Employee thisEmploye, int countGender, int countDep) {
-		idField.setText(Integer.toString(thisEmploye.getEmployeeId()));
-		ppsField.setText(thisEmploye.getPps().trim());
-		surnameField.setText(thisEmploye.getSurname().trim());
-		firstNameField.setText(thisEmploye.getFirstName());
-		genderCombo.setSelectedIndex(countGender);
-		departmentCombo.setSelectedIndex(countDep);
-		salaryField.setText(format.format(thisEmploye.getSalary()));
-		// set corresponding full time combo box value to current employee
-		if (thisEmploye.getFullTime() == true)
-			fullTimeCombo.setSelectedIndex(1);
-		else
-			fullTimeCombo.setSelectedIndex(2);
-		
-	}
+		searchByIdField.setText("");
+		searchBySurnameField.setText("");
+		// if Employee is null or ID is 0 do nothing else display Employee
+		// details
+		if (thisEmployee == null ||thisEmployee.getEmployeeId() == 0) {
+		} else {
+			// find corresponding gender combo box value to current employee
+			while (!found && countGender < gender.length - 1) {
+				if (Character.toString(thisEmployee.getGender()).equalsIgnoreCase(gender[countGender]))
+					found = true;
+				else
+					countGender++;
+			} // end while
+			found = false;
+			// find corresponding department combo box value to current employee
+			while (!found && countDep < department.length - 1) {
+				if (thisEmployee.getDepartment().trim().equalsIgnoreCase(department[countDep]))
+					found = true;
+				else
+					countDep++;
+			} // end while
+			idField.setText(Integer.toString(thisEmployee.getEmployeeId()));
+			ppsField.setText(thisEmployee.getPps().trim());
+			surnameField.setText(thisEmployee.getSurname().trim());
+			firstNameField.setText(thisEmployee.getFirstName());
+			genderCombo.setSelectedIndex(countGender);
+			departmentCombo.setSelectedIndex(countDep);
+			salaryField.setText(format.format(thisEmployee.getSalary()));
+			// set corresponding full time combo box value to current employee
+			if (thisEmployee.getFullTime() == true)
+				fullTimeCombo.setSelectedIndex(1);
+			else
+				fullTimeCombo.setSelectedIndex(2);
+		}
+		change = false;
+	}// end display records
 
 	// display Employee summary dialog
 	private void displayEmployeeSummaryDialog() {
@@ -715,17 +705,18 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 
 	// check for input in text fields
 	private boolean checkInput() {
+		
+		 
 		boolean valid = true;
 		// if any of inputs are in wrong format, colour text field and display
 		// message
-		if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()) {
-			ppsField.setBackground(new Color(255, 150, 150));
-			valid = false;
-		} // end if
-		if (ppsField.isEditable() && correctPps(ppsField.getText().trim(), currentByteStart)) {
-			ppsField.setBackground(new Color(255, 150, 150));
-			valid = false;
-		} // end if
+
+if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()
+    && correctPps(ppsField.getText().trim(), currentByteStart)) {
+	ppsField.setBackground(new Color(255, 150, 150));
+	valid = false;
+}
+
 		if (surnameField.isEditable() && surnameField.getText().trim().isEmpty()) {
 			surnameField.setBackground(new Color(255, 150, 150));
 			valid = false;
@@ -854,14 +845,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 				if (returnVal == JOptionPane.YES_OPTION) {
 					// save changes if ID field is not empty
 					if (!idField.getText().equals("")) {
-						// open file for writing
-						application.openWriteFile(file.getAbsolutePath());
-						// get changes for current Employee
-						currentEmployee = getChangedDetails();
-						// write changes to file for corresponding Employee
-						// record
-						application.changeRecords(currentEmployee, currentByteStart);
-						application.closeWriteFile();// close file for writing
+						handlefile();
 					} // end if
 				} // end if
 			} // end if
@@ -871,6 +855,8 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		} // end else
 	}// end saveFile
 
+
+
 	// save changes to current Employee
 	private void saveChanges() {
 		int returnVal = JOptionPane.showOptionDialog(frame, "Do you want to save changes to current Employee?", "Save",
@@ -878,18 +864,24 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		// if user choose to save changes, save changes
 		if (returnVal == JOptionPane.YES_OPTION) {
 			// open file for writing
-			application.openWriteFile(file.getAbsolutePath());
-			// get changes for current Employee
-			currentEmployee = getChangedDetails();
-			// write changes to file for corresponding Employee record
-			application.changeRecords(currentEmployee, currentByteStart);
-			application.closeWriteFile();// close file for writing
+			handlefile();
 			changesMade = false;// state that all changes has bee saved
 		} // end if
 		displayRecords(currentEmployee);
 		setEnabled(false);
 	}// end saveChanges
-
+	
+	private void handlefile() {
+		
+		// open file for writing
+		application.openWriteFile(file.getAbsolutePath());
+		// get changes for current Employee
+		currentEmployee = getChangedDetails();
+		// write changes to file for corresponding Employee
+		// record
+		application.changeRecords(currentEmployee, currentByteStart);
+		application.closeWriteFile();// close file for writing
+	}
 	// save file as 'save as'
 	private void saveFileAs() {
 		final JFileChooser fc = new JFileChooser();
@@ -1146,3 +1138,4 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 	public void windowOpened(WindowEvent e) {
 	}
 }// end class EmployeeDetails
+
