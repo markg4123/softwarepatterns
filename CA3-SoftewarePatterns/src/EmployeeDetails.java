@@ -707,11 +707,11 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		// if any of inputs are in wrong format, colour text field and display
 		// message
 
-if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()
-    && correctPps(ppsField.getText().trim(), currentByteStart)) {
-	ppsField.setBackground(new Color(255, 150, 150));
-	valid = false;
-}
+		if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()
+			&& correctPps(ppsField.getText().trim(), currentByteStart)) {
+			ppsField.setBackground(new Color(255, 150, 150));
+			valid = false;
+		}
 
 		if (surnameField.isEditable() && surnameField.getText().trim().isEmpty()) {
 			surnameField.setBackground(new Color(255, 150, 150));

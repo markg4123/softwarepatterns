@@ -127,7 +127,7 @@ public class AddRecordDialog extends JDialog implements ActionListener {
 		
 		boolean valid = true;
 		// if any of inputs are in wrong format, colour text field and display message
-		if (ppsField.getText().equals("")) {
+		if (ppsField.getText().equals("") ) {
 			ppsField.setBackground(new Color(255, 150, 150));
 			valid = false;
 		}// end if
@@ -149,7 +149,7 @@ public class AddRecordDialog extends JDialog implements ActionListener {
 		}// end if
 		if (departmentCombo.getSelectedIndex() == 0) {
 			departmentCombo.setBackground(new Color(255, 150, 150));
-			valid = false;
+			valid = false; 
 		}// end if
 		try {// try to get values from text field
 			Double.parseDouble(salaryField.getText());
