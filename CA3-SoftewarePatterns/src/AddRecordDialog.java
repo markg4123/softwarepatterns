@@ -95,10 +95,10 @@ public class AddRecordDialog extends JDialog implements ActionListener {
 			}// end if
 			else if(empDetails.getComponent(i) instanceof JTextField){
 				field = (JTextField) empDetails.getComponent(i);
-				if(field == ppsField)
-					field.setDocument(new JTextFieldLimit(9));
-				else
-				field.setDocument(new JTextFieldLimit(20));
+			//	if(field == ppsField)
+				//	field.setDocument(new JTextFieldLimit(9));
+				//else
+				//field.setDocument(new JTextFieldLimit(20));
 			}// end else if
 		}// end for
 		idField.setText(Integer.toString(this.parent.getNextFreeId()));

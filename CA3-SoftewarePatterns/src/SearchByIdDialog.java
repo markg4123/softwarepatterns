@@ -56,7 +56,7 @@ public class SearchByIdDialog extends JDialog implements ActionListener {
 		searchLabel.setFont(this.parent.font1);
 		textPanel.add(searchField = new JTextField(20));
 		searchField.setFont(this.parent.font1);
-		searchField.setDocument(new JTextFieldLimit(20));
+		
 		
 		buttonPanel.add(search = new JButton("Search"));
 		search.addActionListener(this);

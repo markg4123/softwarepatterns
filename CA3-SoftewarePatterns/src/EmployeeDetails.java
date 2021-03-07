@@ -151,7 +151,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		searchPanel.add(new JLabel("Search by ID:"), "growx, pushx");
 		searchPanel.add(searchByIdField = new JTextField(20), "width 200:200:200, growx, pushx");
 		searchByIdField.addActionListener(this);
-		searchByIdField.setDocument(new JTextFieldLimit(20));
+		//searchByIdField.setDocument(new JTextFieldLimit(20));
 		searchPanel.add(searchId = new JButton(new ImageIcon(
 				new ImageIcon("imgres.png").getImage().getScaledInstance(35, 20, java.awt.Image.SCALE_SMOOTH))),
 				"width 35:35:35, height 20:20:20, growx, pushx, wrap");
@@ -161,7 +161,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		searchPanel.add(new JLabel("Search by Surname:"), "growx, pushx");
 		searchPanel.add(searchBySurnameField = new JTextField(20), "width 200:200:200, growx, pushx");
 		searchBySurnameField.addActionListener(this);
-		searchBySurnameField.setDocument(new JTextFieldLimit(20));
+		//searchBySurnameField.setDocument(new JTextFieldLimit(20));
 		searchPanel.add(
 				searchSurname = new JButton(new ImageIcon(new ImageIcon("imgres.png").getImage()
 						.getScaledInstance(35, 20, java.awt.Image.SCALE_SMOOTH))),
@@ -273,10 +273,6 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 			if (empDetails.getComponent(i) instanceof JTextField) {
 				field = (JTextField) empDetails.getComponent(i);
 				field.setEditable(false);
-				if (field == ppsField)
-					field.setDocument(new JTextFieldLimit(9));
-				else
-					field.setDocument(new JTextFieldLimit(20));
 				field.getDocument().addDocumentListener(this);
 			} // end if
 			else if (empDetails.getComponent(i) instanceof JComboBox) {
@@ -1094,21 +1090,7 @@ if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()
 	}// end main
 
 	// DocumentListener methods
-	public void changedUpdate(DocumentEvent d) {
-		change = true;
-		new JTextFieldLimit(20);
-	}
-
-	public void insertUpdate(DocumentEvent d) {
-		change = true;
-		new JTextFieldLimit(20);
-	}
-
-	public void removeUpdate(DocumentEvent d) {
-		change = true;
-		new JTextFieldLimit(20);
-	}
-
+	
 	// ItemListener method
 	public void itemStateChanged(ItemEvent e) {
 		change = true;
@@ -1136,6 +1118,24 @@ if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()
 	}
 
 	public void windowOpened(WindowEvent e) {
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }// end class EmployeeDetails
 
